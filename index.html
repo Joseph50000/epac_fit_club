@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EPAC FIT CLUB — Rejoins le mouvement</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f5f0;
+    --gray-1: #1a1a1a;
+    --gray-2: #2a2a2a;
+    --gray-3: #555;
+    --gray-4: #999;
+    --accent: #e8e0d0;
+    --line: rgba(255,255,255,0.08);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--white);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1.5px solid rgba(255,255,255,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.18s ease;
+    mix-blend-mode: difference;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 3rem;
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(16px);
+    background: rgba(10,10,10,0.7);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.12em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: var(--black);
+    z-index: 0;
+  }
+
+  /* Animated grid */
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    z-index: 1;
+    animation: gridMove 20s linear infinite;
+  }
+  @keyframes gridMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 60px 60px; }
+  }
+
+  /* Big number decoration */
+  .hero-deco {
+    position: absolute;
+    top: 50%; right: -2rem;
+    transform: translateY(-55%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(200px, 28vw, 400px);
+    color: rgba(255,255,255,0.025);
+    line-height: 1;
+    user-select: none;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 900px; }
+
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray-4);
+    border: 1px solid var(--gray-2);
+    padding: 0.35rem 1rem;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 11vw, 10rem);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.9s 0.1s ease both;
+  }
+  .hero-title span { color: var(--gray-3); }
+
+  .hero-sub {
+    max-width: 480px;
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--gray-4);
+    margin-bottom: 3rem;
+    animation: fadeUp 0.9s 0.2s ease both;
+  }
+
+  .hero-ctas {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp 0.9s 0.3s ease both;
+  }
+
+  .btn-primary {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--white);
+    border: none;
+    padding: 1rem 2.4rem;
+    cursor: none;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+
+  .btn-ghost {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: transparent;
+    border: 1px solid var(--gray-2);
+    padding: 1rem 2.4rem;
+    cursor: none;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .btn-ghost:hover { border-color: var(--gray-4); transform: translateY(-2px); }
+
+  .hero-stats {
+    position: absolute;
+    right: 3rem; bottom: 4rem;
+    display: flex; flex-direction: column; gap: 2rem;
+    z-index: 2;
+    animation: fadeIn 1.2s 0.5s ease both;
+  }
+  .hero-stat-item { text-align: right; }
+  .hero-stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    line-height: 1;
+    color: var(--white);
+  }
+  .hero-stat-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gray-3);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* ── SECTION GENERIC ── */
+  section { padding: 6rem 3rem; }
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gray-3);
+    margin-bottom: 1.2rem;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: 0.04em;
+    margin-bottom: 1rem;
+  }
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 0;
+  }
+
+  /* ── À PROPOS ── */
+  #about { border-top: 1px solid var(--line); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    margin-top: 4rem;
+    align-items: start;
+  }
+  .about-text p {
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--gray-4);
+    margin-bottom: 1.5rem;
+  }
+  .about-text p strong { color: var(--white); font-weight: 500; }
+
+  .about-pillars {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+  }
+  .pillar {
+    background: var(--black);
+    padding: 2rem 1.8rem;
+    transition: background 0.2s;
+  }
+  .pillar:hover { background: var(--gray-1); }
+  .pillar-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+  .pillar-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.5rem;
+  }
+  .pillar-desc { font-size: 0.85rem; color: var(--gray-4); line-height: 1.6; font-weight: 300; }
+
+  /* ── SONDAGE ── */
+  #sondage { background: var(--gray-1); border-top: 1px solid var(--line); }
+
+  .survey-wrapper {
+    max-width: 760px;
+    margin: 3rem auto 0;
+  }
+
+  .survey-progress-bar {
+    height: 2px;
+    background: var(--gray-2);
+    border-radius: 1px;
+    margin-bottom: 3rem;
+    overflow: hidden;
+  }
+  .survey-progress-fill {
+    height: 100%;
+    background: var(--white);
+    border-radius: 1px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .survey-step { display: none; animation: fadeUp 0.4s ease both; }
+  .survey-step.active { display: block; }
+
+  .survey-question {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.5rem;
+    line-height: 1.1;
+  }
+  .survey-hint {
+    font-size: 0.82rem;
+    color: var(--gray-3);
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+  .option-btn {
+    background: var(--gray-2);
+    border: 1px solid transparent;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    padding: 1rem 1.4rem;
+    text-align: left;
+    cursor: none;
+    transition: all 0.18s;
+    border-radius: 2px;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .option-btn:hover { background: var(--gray-3); }
+  .option-btn.selected {
+    background: var(--white);
+    color: var(--black);
+    border-color: var(--white);
+  }
+  .option-btn .opt-icon { font-size: 1.2rem; flex-shrink: 0; }
+
+  .options-single { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2.5rem; }
+
+  .scale-wrapper {
+    display: flex; gap: 0.5rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .scale-btn {
+    width: 52px; height: 52px;
+    background: var(--gray-2);
+    border: 1px solid transparent;
+    color: var(--white);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    cursor: none;
+    transition: all 0.18s;
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .scale-btn:hover { background: var(--gray-3); }
+  .scale-btn.selected { background: var(--white); color: var(--black); }
+
+  .survey-nav { display: flex; justify-content: space-between; align-items: center; }
+  .survey-counter { font-size: 0.75rem; color: var(--gray-3); letter-spacing: 0.1em; }
+
+  .text-input {
+    width: 100%;
+    background: var(--gray-2);
+    border: 1px solid var(--gray-2);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    padding: 1.2rem 1.4rem;
+    border-radius: 2px;
+    outline: none;
+    margin-bottom: 2.5rem;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+  .text-input:focus { border-color: var(--gray-4); }
+
+  /* Thank you screen */
+  .survey-thanks {
+    display: none;
+    text-align: center;
+    padding: 3rem 0;
+  }
+  .thanks-icon { font-size: 3rem; margin-bottom: 1.5rem; }
+  .thanks-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+  }
+  .thanks-sub { color: var(--gray-4); font-weight: 300; line-height: 1.7; }
+
+  /* ── INSCRIPTION ── */
+  #inscription { border-top: 1px solid var(--line); }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    max-width: 760px;
+    margin-top: 3rem;
+  }
+  .form-grid .full { grid-column: 1 / -1; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray-3);
+  }
+  .form-input, .form-select {
+    background: var(--gray-1);
+    border: 1px solid var(--gray-2);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 300;
+    padding: 0.9rem 1.2rem;
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  .form-input:focus, .form-select:focus { border-color: var(--white); }
+  .form-select option { background: var(--gray-1); }
+
+  .checkbox-group {
+    display: flex; gap: 0.75rem; flex-wrap: wrap;
+    margin-top: 0.3rem;
+  }
+  .checkbox-item {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: var(--gray-1);
+    border: 1px solid var(--gray-2);
+    padding: 0.5rem 1rem;
+    border-radius: 2px;
+    cursor: none;
+    transition: all 0.18s;
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--gray-4);
+  }
+  .checkbox-item:hover { border-color: var(--gray-4); color: var(--white); }
+  .checkbox-item.checked { border-color: var(--white); color: var(--white); background: var(--gray-2); }
+  .checkbox-item input { display: none; }
+
+  .form-submit {
+    grid-column: 1 / -1;
+    margin-top: 1rem;
+    display: flex; align-items: center; gap: 1.5rem;
+  }
+  .form-message {
+    font-size: 0.82rem;
+    color: var(--gray-3);
+    font-weight: 300;
+  }
+
+  /* Success state */
+  .reg-success {
+    display: none;
+    background: var(--gray-1);
+    border: 1px solid var(--gray-2);
+    padding: 2.5rem;
+    border-radius: 2px;
+    max-width: 760px;
+    margin-top: 3rem;
+    text-align: center;
+  }
+  .reg-success-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .reg-success h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.75rem;
+  }
+  .reg-success p { color: var(--gray-4); font-weight: 300; font-size: 0.95rem; line-height: 1.7; }
+
+  /* ── COMPTEUR ── */
+  .counter-bar {
+    background: var(--gray-1);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 2.5rem 3rem;
+    display: flex; gap: 4rem; align-items: center;
+    overflow-x: auto;
+  }
+  .counter-item { flex-shrink: 0; }
+  .counter-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    line-height: 1;
+    color: var(--white);
+  }
+  .counter-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-3);
+    margin-top: 0.2rem;
+  }
+
+  /* ── TÉMOIGNAGES / AVIS ── */
+  #avis { border-top: 1px solid var(--line); }
+  .avis-intro {
+    max-width: 520px;
+    font-size: 0.95rem;
+    color: var(--gray-4);
+    font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 3.5rem;
+  }
+
+  .avis-form-inline {
+    background: var(--gray-1);
+    border: 1px solid var(--gray-2);
+    padding: 2.5rem;
+    border-radius: 2px;
+    max-width: 700px;
+    margin-bottom: 3rem;
+  }
+  .avis-form-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 1.5rem;
+  }
+  .avis-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem; }
+  .avis-fields .full { grid-column: 1 / -1; }
+
+  .stars-input { display: flex; gap: 0.4rem; margin: 0.6rem 0 1.2rem; }
+  .star-btn {
+    font-size: 1.6rem;
+    cursor: none;
+    color: var(--gray-2);
+    transition: color 0.15s, transform 0.15s;
+    background: none; border: none;
+    line-height: 1;
+  }
+  .star-btn.active { color: var(--white); transform: scale(1.1); }
+
+  .avis-list { display: flex; flex-direction: column; gap: 1px; background: var(--line); max-width: 700px; }
+  .avis-card {
+    background: var(--black);
+    padding: 1.8rem 2rem;
+    transition: background 0.2s;
+  }
+  .avis-card:hover { background: var(--gray-1); }
+  .avis-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem; }
+  .avis-author { font-weight: 500; font-size: 0.9rem; }
+  .avis-filiere { font-size: 0.75rem; color: var(--gray-3); font-weight: 300; margin-top: 0.1rem; }
+  .avis-stars { color: var(--white); font-size: 0.9rem; letter-spacing: 0.1em; }
+  .avis-text { font-size: 0.9rem; color: var(--gray-4); font-weight: 300; line-height: 1.7; }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 0.1em;
+    color: var(--gray-3);
+  }
+  .footer-info { font-size: 0.78rem; color: var(--gray-3); font-weight: 300; line-height: 1.7; }
+  .footer-socials { display: flex; gap: 1.5rem; }
+  .footer-socials a {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray-3);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-socials a:hover { color: var(--white); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 0 1.5rem 3rem; }
+    .hero-stats { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .form-grid { grid-template-columns: 1fr; }
+    .avis-fields { grid-template-columns: 1fr; }
+    .options-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; padding: 2rem 1.5rem; }
+    .counter-bar { padding: 2rem 1.5rem; gap: 2.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">EPAC FIT CLUB</a>
+  <ul class="nav-links">
+    <li><a href="#about">Le Club</a></li>
+    <li><a href="#sondage">Sondage</a></li>
+    <li><a href="#inscription">S'inscrire</a></li>
+    <li><a href="#avis">Avis</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-deco">FIT</div>
+  <div class="hero-content">
+    <div class="hero-tag">EPAC · Université d'Abomey-Calavi · 2025–2026</div>
+    <h1 class="hero-title">EPAC<br><span>FIT</span><br>CLUB</h1>
+    <p class="hero-sub">Le premier club de fitness étudiant de l'EPAC. Mise en forme, performance et bien-être — par et pour les étudiants.</p>
+    <div class="hero-ctas">
+      <a href="#inscription" class="btn-primary">Rejoindre le club</a>
+      <a href="#sondage" class="btn-ghost">Donner mon avis</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat-item">
+      <div class="hero-stat-num" id="heroCount">0</div>
+      <div class="hero-stat-label">Membres inscrits</div>
+    </div>
+    <div class="hero-stat-item">
+      <div class="hero-stat-num" id="surveyCount">0</div>
+      <div class="hero-stat-label">Sondages complétés</div>
+    </div>
+    <div class="hero-stat-item">
+      <div class="hero-stat-num">∞</div>
+      <div class="hero-stat-label">Motivation</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPTEUR BAR -->
+<div class="counter-bar">
+  <div class="counter-item">
+    <div class="counter-num" id="cntMembers">0</div>
+    <div class="counter-label">Membres inscrits</div>
+  </div>
+  <div class="counter-item">
+    <div class="counter-num" id="cntSurveys">0</div>
+    <div class="counter-label">Sondages soumis</div>
+  </div>
+  <div class="counter-item">
+    <div class="counter-num" id="cntAvis">0</div>
+    <div class="counter-label">Avis déposés</div>
+  </div>
+  <div class="counter-item">
+    <div class="counter-num">~3 000</div>
+    <div class="counter-label">Étudiants EPAC</div>
+  </div>
+</div>
+
+<!-- À PROPOS -->
+<section id="about">
+  <div class="section-label">Le Club</div>
+  <h2 class="section-title">UN CORPS SAIN,<br>UN ESPRIT FORT</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>L'<strong>EPAC FIT CLUB</strong> est une initiative étudiante visant à créer le premier espace de fitness structuré au sein de l'École Polytechnique d'Abomey-Calavi.</p>
+      <p>Notre ambition : offrir à chaque étudiant un lieu où entretenir son corps, gérer son stress, et <strong>renforcer sa discipline</strong> — des qualités indispensables aussi bien dans la salle de sport que dans l'amphithéâtre.</p>
+      <p>Le club est <strong>ouvert à tous</strong> : étudiants toutes filières, enseignants et personnels. Aucune expérience sportive n'est requise.</p>
+    </div>
+    <div class="about-pillars">
+      <div class="pillar">
+        <div class="pillar-icon">🏋️</div>
+        <div class="pillar-name">Musculation</div>
+        <div class="pillar-desc">Haltères, barres, machines de base pour le renforcement musculaire.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🤸</div>
+        <div class="pillar-name">Cardio</div>
+        <div class="pillar-desc">Vélos, cordes à sauter, circuits d'entraînement fonctionnel.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🧘</div>
+        <div class="pillar-name">Bien-être</div>
+        <div class="pillar-desc">Étirements, respiration, gestion du stress avant les examens.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🤝</div>
+        <div class="pillar-name">Communauté</div>
+        <div class="pillar-desc">Challenges mensuels, entraînements collectifs, esprit d'équipe.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SONDAGE -->
+<section id="sondage">
+  <div class="section-label">Fais-toi entendre</div>
+  <h2 class="section-title">SONDAGE<br>OFFICIEL</h2>
+  <p style="color:var(--gray-4);font-weight:300;max-width:480px;margin-bottom:0.5rem;font-size:0.95rem;line-height:1.7">
+    Ton avis compte pour valider le projet auprès du BUE. 5 questions, moins de 2 minutes.
+  </p>
+
+  <div class="survey-wrapper">
+    <div class="survey-progress-bar">
+      <div class="survey-progress-fill" id="surveyProgress"></div>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="survey-step active" data-step="1">
+      <div class="survey-question">Es-tu intéressé(e) par un club de fitness à l'EPAC ?</div>
+      <div class="survey-hint">Une seule réponse</div>
+      <div class="options-single">
+        <button class="option-btn" onclick="selectSingle(this, 'q1')"><span class="opt-icon">💪</span> Oui, absolument !</button>
+        <button class="option-btn" onclick="selectSingle(this, 'q1')"><span class="opt-icon">🤔</span> Peut-être, j'aurais besoin d'en savoir plus</button>
+        <button class="option-btn" onclick="selectSingle(this, 'q1')"><span class="opt-icon">😐</span> Pas vraiment intéressé(e)</button>
+        <button class="option-btn" onclick="selectSingle(this, 'q1')"><span class="opt-icon">❌</span> Non, pas du tout</button>
+      </div>
+      <div class="survey-nav">
+        <span class="survey-counter">Question 1 / 5</span>
+        <button class="btn-primary" onclick="nextStep(2)">Suivant →</button>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="survey-step" data-step="2">
+      <div class="survey-question">Quelles activités t'intéressent le plus ?</div>
+      <div class="survey-hint">Plusieurs réponses possibles</div>
+      <div class="options-grid">
+        <button class="option-btn" onclick="toggleOption(this, 'q2')"><span class="opt-icon">🏋️</span> Musculation</button>
+        <button class="option-btn" onclick="toggleOption(this, 'q2')"><span class="opt-icon">🚴</span> Cardio / Vélo</button>
+        <button class="option-btn" onclick="toggleOption(this, 'q2')"><span class="opt-icon">🥊</span> Arts martiaux</button>
+        <button class="option-btn" onclick="toggleOption(this, 'q2')"><span class="opt-icon">🧘</span> Yoga / Stretching</button>
+        <button class="option-btn" onclick="toggleOption(this, 'q2')"><span class="opt-icon">⚽</span> Sports collectifs</button>
+        <button class="option-btn" onclick="toggleOption(this, 'q2')"><span class="opt-icon">🏃</span> Course / Endurance</button>
+      </div>
+      <div class="survey-nav">
+        <span class="survey-counter">Question 2 / 5</span>
+        <div style="display:flex;gap:0.75rem">
+          <button class="btn-ghost" onclick="prevStep(1)">← Retour</button>
+          <button class="btn-primary" onclick="nextStep(3)">Suivant →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="survey-step" data-step="3">
+      <div class="survey-question">À quelle fréquence pratiquerais-tu ?</div>
+      <div class="survey-hint">Une seule réponse</div>
+      <div class="options-single">
+        <button class="option-btn" onclick="selectSingle(this, 'q3')"><span class="opt-icon">🔥</span> 3× par semaine ou plus</button>
+        <button class="option-btn" onclick="selectSingle(this, 'q3')"><span class="opt-icon">⚡</span> 2× par semaine</button>
+        <button class="option-btn" onclick="selectSingle(this, 'q3')"><span class="opt-icon">✅</span> 1× par semaine</button>
+        <button class="option-btn" onclick="selectSingle(this, 'q3')"><span class="opt-icon">🗓️</span> Occasionnellement</button>
+      </div>
+      <div class="survey-nav">
+        <span class="survey-counter">Question 3 / 5</span>
+        <div style="display:flex;gap:0.75rem">
+          <button class="btn-ghost" onclick="prevStep(2)">← Retour</button>
+          <button class="btn-primary" onclick="nextStep(4)">Suivant →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="survey-step" data-step="4">
+      <div class="survey-question">Combien serais-tu prêt(e) à cotiser ?</div>
+      <div class="survey-hint">Par mois — une seule réponse</div>
+      <div class="options-single">
+        <button class="option-btn" onclick="selectSingle(this, 'q4')"><span class="opt-icon">💰</span> Moins de 500 FCFA</button>
+        <button class="option-btn" onclick="selectSingle(this, 'q4')"><span class="opt-icon">💰</span> 500 – 1 000 FCFA</button>
+        <button class="option-btn" onclick="selectSingle(this, 'q4')"><span class="opt-icon">💰</span> 1 000 – 2 000 FCFA</button>
+        <button class="option-btn" onclick="selectSingle(this, 'q4')"><span class="opt-icon">💰</span> Plus de 2 000 FCFA</button>
+      </div>
+      <div class="survey-nav">
+        <span class="survey-counter">Question 4 / 5</span>
+        <div style="display:flex;gap:0.75rem">
+          <button class="btn-ghost" onclick="prevStep(3)">← Retour</button>
+          <button class="btn-primary" onclick="nextStep(5)">Suivant →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="survey-step" data-step="5">
+      <div class="survey-question">Un mot à dire au BUE ?</div>
+      <div class="survey-hint">Optionnel — exprime-toi librement</div>
+      <textarea class="text-input" id="q5text" rows="4" placeholder="Ex : Ce club est une vraie nécessité pour notre bien-être étudiant..."></textarea>
+      <div class="survey-nav">
+        <span class="survey-counter">Question 5 / 5</span>
+        <div style="display:flex;gap:0.75rem">
+          <button class="btn-ghost" onclick="prevStep(4)">← Retour</button>
+          <button class="btn-primary" onclick="submitSurvey()">Soumettre ✓</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thanks -->
+    <div class="survey-thanks" id="surveyThanks">
+      <div class="thanks-icon">🎯</div>
+      <div class="thanks-title">MERCI !</div>
+      <p class="thanks-sub">Ton avis a bien été enregistré. Il sera présenté lors de la soumission du dossier au BUE.<br><br>
+      <a href="#inscription" class="btn-primary" style="display:inline-block;margin-top:1.5rem">Rejoindre le club →</a></p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- INSCRIPTION -->
+<section id="inscription">
+  <div class="section-label">Pré-inscription</div>
+  <h2 class="section-title">REJOINS<br>LE MOUVEMENT</h2>
+  <p style="color:var(--gray-4);font-weight:300;max-width:480px;margin-bottom:0;font-size:0.95rem;line-height:1.7">
+    Pré-inscris-toi dès maintenant. Cette liste sera présentée au BUE comme preuve d'intérêt étudiant.
+  </p>
+
+  <div class="form-grid" id="regForm">
+    <div class="form-group">
+      <label class="form-label">Prénom *</label>
+      <input type="text" class="form-input" id="regPrenom" placeholder="Ton prénom">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Nom *</label>
+      <input type="text" class="form-input" id="regNom" placeholder="Ton nom">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Email *</label>
+      <input type="email" class="form-input" id="regEmail" placeholder="ton@email.com">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Téléphone</label>
+      <input type="tel" class="form-input" id="regTel" placeholder="+229 00 00 00 00">
+    </div>
+    <div class="form-group full">
+      <label class="form-label">Filière *</label>
+      <select class="form-select" id="regFiliere">
+        <option value="" disabled selected>Sélectionne ta filière</option>
+        <option>Génie Informatique et Télécommunications (GIT)</option>
+        <option>Génie Électrique (GE)</option>
+        <option>Génie Mécanique et Énergétique (GME)</option>
+        <option>Génie Civil (GC)</option>
+        <option>Génie Biomédical (GBM)</option>
+        <option>Statistique et Informatique Décisionnelle (SID)</option>
+        <option>Licence Professionnelle</option>
+        <option>Master</option>
+        <option>Personnel / Enseignant</option>
+        <option>Autre</option>
+      </select>
+    </div>
+    <div class="form-group full">
+      <label class="form-label">Niveau</label>
+      <select class="form-select" id="regNiveau">
+        <option value="" disabled selected>Ton niveau d'études</option>
+        <option>L1</option><option>L2</option><option>L3</option>
+        <option>M1</option><option>M2</option>
+        <option>Doctorat</option><option>Personnel</option>
+      </select>
+    </div>
+    <div class="form-group full">
+      <label class="form-label">Activités souhaitées</label>
+      <div class="checkbox-group" id="regActivites">
+        <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Musculation</label>
+        <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Cardio</label>
+        <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Arts martiaux</label>
+        <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Yoga</label>
+        <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Sports collectifs</label>
+        <label class="checkbox-item" onclick="toggleCheck(this)"><input type="checkbox"> Course / Endurance</label>
+      </div>
+    </div>
+    <div class="form-submit">
+      <button class="btn-primary" onclick="submitReg()">M'inscrire sur la liste →</button>
+      <span class="form-message">Tes données ne seront utilisées que dans le cadre du projet.</span>
+    </div>
+    <div id="regError" style="grid-column:1/-1;color:#ff6b6b;font-size:0.85rem;display:none"></div>
+  </div>
+
+  <div class="reg-success" id="regSuccess">
+    <div class="reg-success-icon">🏅</div>
+    <h3>INSCRIPTION CONFIRMÉE</h3>
+    <p>Tu fais partie des pionniers du club !<br>
+    Nous te contacterons dès que le BUE valide le projet.<br><br>
+    En attendant, dis-le à tes amis — plus on est nombreux, plus on est forts.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- AVIS -->
+<section id="avis">
+  <div class="section-label">Témoignages</div>
+  <h2 class="section-title">CE QUE<br>PENSENT LES ÉTUDIANTS</h2>
+  <p class="avis-intro">Laisse un avis pour montrer ton soutien au projet. Ces témoignages seront inclus dans le dossier soumis au BUE.</p>
+
+  <div class="avis-form-inline">
+    <div class="avis-form-title">DÉPOSER MON AVIS</div>
+    <div class="avis-fields">
+      <div class="form-group">
+        <label class="form-label">Prénom</label>
+        <input type="text" class="form-input" id="avisPrenom" placeholder="Ton prénom">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Filière</label>
+        <input type="text" class="form-input" id="avisFiliere" placeholder="Ex: GIT L1">
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Note</label>
+        <div class="stars-input" id="starsInput">
+          <button class="star-btn" data-val="1" onclick="rateStar(1)">★</button>
+          <button class="star-btn" data-val="2" onclick="rateStar(2)">★</button>
+          <button class="star-btn" data-val="3" onclick="rateStar(3)">★</button>
+          <button class="star-btn" data-val="4" onclick="rateStar(4)">★</button>
+          <button class="star-btn" data-val="5" onclick="rateStar(5)">★</button>
+        </div>
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Ton message *</label>
+        <textarea class="text-input" id="avisTexte" rows="3" placeholder="Pourquoi soutiens-tu ce projet ?"></textarea>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="submitAvis()">Publier mon avis →</button>
+  </div>
+
+  <div class="avis-list" id="avisList">
+    <!-- Avis par défaut pour illustration -->
+    <div class="avis-card">
+      <div class="avis-header">
+        <div>
+          <div class="avis-author">Chidi M.</div>
+          <div class="avis-filiere">Génie Informatique L2</div>
+        </div>
+        <div class="avis-stars">★★★★★</div>
+      </div>
+      <div class="avis-text">On passe des heures à coder et à réviser sans bouger. Un espace pour décompresser et s'entraîner, c'est exactement ce qu'il manque sur notre campus. Je signe des deux mains !</div>
+    </div>
+    <div class="avis-card">
+      <div class="avis-header">
+        <div>
+          <div class="avis-author">Fatoumata K.</div>
+          <div class="avis-filiere">Génie Civil L3</div>
+        </div>
+        <div class="avis-stars">★★★★★</div>
+      </div>
+      <div class="avis-text">Le sport améliore la concentration et réduit le stress des examens. C'est scientifiquement prouvé. Ce club est un investissement pour notre réussite académique autant que pour notre santé.</div>
+    </div>
+    <div class="avis-card">
+      <div class="avis-header">
+        <div>
+          <div class="avis-author">Romuald A.</div>
+          <div class="avis-filiere">Génie Électrique M1</div>
+        </div>
+        <div class="avis-stars">★★★★☆</div>
+      </div>
+      <div class="avis-text">Bonne initiative. Les étudiants des autres universités de la région ont leurs salles de sport. Il est temps que l'EPAC rattrape ce retard. Supportons ce projet !</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">EPAC FIT CLUB</div>
+  <div class="footer-info">
+    École Polytechnique d'Abomey-Calavi<br>
+    Université d'Abomey-Calavi · Bénin<br>
+    <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="94f1e4f5f7f2fde0f7f8e1f6d4f3f9f5fdf8baf7fbf9">[email&#160;protected]</a>
+  </div>
+  <div class="footer-socials">
+    <a href="#">TikTok</a>
+    <a href="#">Instagram</a>
+    <a href="#">WhatsApp</a>
+  </div>
+</footer>
+
+<script>
+  // ── CONFIG SUPABASE ──
+  const SUPA_URL = 'https://byrpdoddflmnhwdfdqet.supabase.co';
+  const SUPA_KEY = 'sb_publishable_1es3ejElBxuJa5pdWd6vSA_vG0h0G9i';
+
+  async function sbFetch(path, method = 'GET', body = null) {
+    const opts = {
+      method,
+      headers: {
+        'apikey': SUPA_KEY,
+        'Authorization': 'Bearer ' + SUPA_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': method === 'POST' ? 'return=minimal' : ''
+      }
+    };
+    if (body) opts.body = JSON.stringify(body);
+    const res = await fetch(SUPA_URL + '/rest/v1/' + path, opts);
+    if (method === 'GET') return res.json();
+    return res;
+  }
+
+  // ── CURSOR ──
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx - 5 + 'px';
+    cursor.style.top = my - 5 + 'px';
+  });
+  function animRing() {
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx - 18 + 'px'; ring.style.top = ry - 18 + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+  document.querySelectorAll('a, button, .option-btn, .checkbox-item, .star-btn').forEach(el => {
+    el.addEventListener('mouseenter', () => ring.style.transform = 'scale(1.6)');
+    el.addEventListener('mouseleave', () => ring.style.transform = 'scale(1)');
+  });
+
+  // ── COUNTERS ──
+  function animCount(id, target) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    let cur = 0;
+    const step = Math.max(1, Math.ceil(target / 40));
+    const t = setInterval(() => {
+      cur = Math.min(cur + step, target);
+      el.textContent = cur;
+      if (cur >= target) clearInterval(t);
+    }, 30);
+  }
+
+  async function updateCounters() {
+    try {
+      const [membres, sondages, avis] = await Promise.all([
+        sbFetch('membres?select=id'),
+        sbFetch('sondages?select=id'),
+        sbFetch('avis?select=id')
+      ]);
+      const m = Array.isArray(membres) ? membres.length : 0;
+      const s = Array.isArray(sondages) ? sondages.length : 0;
+      const a = Array.isArray(avis) ? avis.length : 0;
+      animCount('cntMembers', m); animCount('cntSurveys', s); animCount('cntAvis', a);
+      animCount('heroCount', m); animCount('surveyCount', s);
+    } catch(e) { console.warn('Counter error', e); }
+  }
+  updateCounters();
+
+  // ── SURVEY ──
+  const surveyData = {};
+  function selectSingle(btn, key) {
+    btn.closest('.options-single, .survey-step').querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    surveyData[key] = btn.textContent.trim();
+  }
+  function toggleOption(btn, key) {
+    btn.classList.toggle('selected');
+    const sel = [...btn.closest('.options-grid').querySelectorAll('.option-btn.selected')].map(b => b.textContent.trim());
+    surveyData[key] = sel;
+  }
+  function nextStep(n) {
+    document.querySelectorAll('.survey-step').forEach(s => s.classList.remove('active'));
+    const next = document.querySelector('.survey-step[data-step="' + n + '"]');
+    if (next) { next.classList.add('active'); document.getElementById('surveyProgress').style.width = ((n-1)/5*100) + '%'; }
+  }
+  function prevStep(n) { nextStep(n); }
+
+  async function submitSurvey() {
+    const btn = event.target;
+    btn.textContent = 'Envoi...'; btn.disabled = true;
+    try {
+      await sbFetch('sondages', 'POST', {
+        q1: surveyData.q1 || null, q2: surveyData.q2 || [],
+        q3: surveyData.q3 || null, q4: surveyData.q4 || null,
+        q5: document.getElementById('q5text').value || null
+      });
+      document.querySelectorAll('.survey-step').forEach(s => s.style.display = 'none');
+      document.getElementById('surveyProgress').style.width = '100%';
+      document.getElementById('surveyThanks').style.display = 'block';
+      updateCounters();
+    } catch(e) {
+      btn.textContent = 'Réessayer'; btn.disabled = false;
+      alert('Erreur réseau. Vérifie ta connexion.');
+    }
+  }
+
+  // ── INSCRIPTION ──
+  function toggleCheck(label) { label.classList.toggle('checked'); }
+
+  async function submitReg() {
+    const prenom = document.getElementById('regPrenom').value.trim();
+    const nom    = document.getElementById('regNom').value.trim();
+    const email  = document.getElementById('regEmail').value.trim();
+    const filiere = document.getElementById('regFiliere').value;
+    const err = document.getElementById('regError');
+    if (!prenom || !nom || !email || !filiere) {
+      err.textContent = '⚠ Veuillez remplir tous les champs obligatoires (*)';
+      err.style.display = 'block'; return;
+    }
+    if (!email.includes('@')) {
+      err.textContent = '⚠ Adresse email invalide';
+      err.style.display = 'block'; return;
+    }
+    err.style.display = 'none';
+    const btn = document.querySelector('#regForm .btn-primary');
+    btn.textContent = 'Envoi en cours...'; btn.disabled = true;
+    const activites = [...document.querySelectorAll('#regActivites .checkbox-item.checked')].map(l => l.textContent.trim());
+    try {
+      const res = await sbFetch('membres', 'POST', {
+        prenom, nom, email,
+        tel: document.getElementById('regTel').value || null,
+        filiere,
+        niveau: document.getElementById('regNiveau').value || null,
+        activites
+      });
+      if (res.status === 201 || res.ok) {
+        document.getElementById('regForm').style.display = 'none';
+        document.getElementById('regSuccess').style.display = 'block';
+        updateCounters();
+      } else {
+        const data = await res.json().catch(() => ({}));
+        err.textContent = data.code === '23505' ? '⚠ Cet email est déjà inscrit.' : '⚠ Erreur : ' + (data.message || 'réessaie plus tard.');
+        err.style.display = 'block';
+        btn.textContent = "M'inscrire sur la liste →"; btn.disabled = false;
+      }
+    } catch(e) {
+      err.textContent = '⚠ Erreur réseau. Vérifie ta connexion.';
+      err.style.display = 'block';
+      btn.textContent = "M'inscrire sur la liste →"; btn.disabled = false;
+    }
+  }
+
+  // ── AVIS ──
+  let currentStars = 0;
+  function rateStar(n) {
+    currentStars = n;
+    document.querySelectorAll('.star-btn').forEach(b => b.classList.toggle('active', parseInt(b.dataset.val) <= n));
+  }
+
+  async function submitAvis() {
+    const prenom = document.getElementById('avisPrenom').value.trim() || 'Anonyme';
+    const filiere = document.getElementById('avisFiliere').value.trim() || 'EPAC';
+    const texte  = document.getElementById('avisTexte').value.trim();
+    if (!texte) { alert("Écris un message avant de publier."); return; }
+    const btn = document.querySelector('.avis-form-inline .btn-primary');
+    btn.textContent = 'Publication...'; btn.disabled = true;
+    const stars = currentStars || 5;
+    try {
+      await sbFetch('avis', 'POST', { prenom, filiere, stars, texte });
+      const starsStr = '★'.repeat(stars) + '☆'.repeat(5 - stars);
+      const card = document.createElement('div');
+      card.className = 'avis-card';
+      card.style.animation = 'fadeUp 0.4s ease both';
+      card.innerHTML = '<div class="avis-header"><div><div class="avis-author">' + prenom + '</div><div class="avis-filiere">' + filiere + '</div></div><div class="avis-stars">' + starsStr + '</div></div><div class="avis-text">' + texte + '</div>';
+      document.getElementById('avisList').prepend(card);
+      document.getElementById('avisPrenom').value = '';
+      document.getElementById('avisFiliere').value = '';
+      document.getElementById('avisTexte').value = '';
+      currentStars = 0;
+      document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
+      updateCounters();
+    } catch(e) { alert('Erreur réseau.'); }
+    btn.textContent = 'Publier mon avis →'; btn.disabled = false;
+  }
+
+  // ── CHARGER LES AVIS DEPUIS SUPABASE ──
+  async function loadAvis() {
+    try {
+      const data = await sbFetch('avis?select=*&order=created_at.desc&limit=20');
+      if (!Array.isArray(data)) return;
+      data.forEach(a => {
+        const starsStr = '★'.repeat(a.stars) + '☆'.repeat(5 - a.stars);
+        const card = document.createElement('div');
+        card.className = 'avis-card';
+        card.innerHTML = '<div class="avis-header"><div><div class="avis-author">' + a.prenom + '</div><div class="avis-filiere">' + a.filiere + '</div></div><div class="avis-stars">' + starsStr + '</div></div><div class="avis-text">' + a.texte + '</div>';
+        document.getElementById('avisList').appendChild(card);
+      });
+    } catch(e) { console.warn('Avis load error', e); }
+  }
+  loadAvis();
+
+  // ── SCROLL REVEAL ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.pillar, .counter-item').forEach(el => {
+    el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
